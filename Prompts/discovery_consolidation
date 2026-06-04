@@ -1,0 +1,54 @@
+# 2. Subaspect Discovery and Taxonomy Consolidation
+
+After embedding-based semantic grouping, this prompt supports the discovery of latent subproblems within each ontology aspect.
+
+The prompt is used in two consecutive stages:
+
+- **Discovery:** identification and naming of candidate subaspects from semantically similar opinion groups,
+- **Consolidation:** merging overlapping or conceptually equivalent subaspects into a coherent taxonomy.
+
+The resulting taxonomy extends the ontology with data-driven, domain-specific problem categories.
+
+---
+
+## Discovery
+  
+      "Task: Within a SINGLE ABSA aspect, discover recurring subproblems (subaspects).\n",
+      "Language: Hungarian.\n\n",
+      "ASPECT (NAMESPACE): ", aspect_name, "\n\n",
+      "RULES:\n",
+      "- Only generate labels that belong to THIS aspect.\n",
+      "- Labels should be short, reusable noun phrases (2–5 words).\n",
+      "- DO NOT create one label per quote. Each label should cover multiple quotes.\n",
+      "- Generate 10–25 CANDIDATE labels.\n",
+      "- Output must be STRICT JSON.\n\n",
+      "Output schema:\n",
+      "{ \"aspect\": \"...\", \"candidates\": [ {\"label\":\"...\",\"hint\":\"one-sentence meaning\"} ] }\n\n",
+      "Representative (maximin) quotes:\n",
+
+---
+
+## Consolidation
+
+"Task: consolidate the candidate subaspect labels into a FINAL taxonomy.\n",
+"Language: Hungarian.\n\n",
+"ASPECT (NAMESPACE): ", aspect_name, "\n\n",
+"RULES (CRITICAL):\n",
+"1) Generate 6–12 SUBASPECT labels.\n",
+"2) The label OTHER_TOO_VAGUE must be included for cases where no SUBASPECT label is appropriate.\n",
+"3) Labels must be mutually exclusive and non-overlapping.\n",
+"4) Provide a one-sentence definition for each label.\n",
+"5) Do not introduce new themes beyond the candidate labels and quotes.\n",
+"6) All labels must belong to this aspect only.\n",
+"7) STRICT JSON output, nothing else.\n\n",
+"INPUT candidate labels:\n",
+toJSON(candidates, auto_unbox = TRUE, pretty = TRUE), "\n\n",
+"Representative quotes (context):\n",
+paste0("- ", reps, collapse="\n"), "\n\n",
+"Output schema:\n",
+"{\n",
+"  \"aspect\": \"...\",\n",
+"  \"subaspects\": [\n",
+"    {\"label\":\"...\",\"definition\":\"...\"}\n",
+"  ]\n",
+"}\n"
