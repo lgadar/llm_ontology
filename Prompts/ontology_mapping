@@ -1,4 +1,17 @@
-    "Perform Aspect-Based Sentiment Analysis (ABSA) on the following Hungarian text.\n",
+# 1. Ontology-Guided LLM-Based ABSA
+
+This prompt performs multiple tasks simultaneously on raw textual feedback:
+
+- decomposition of complex feedback into atomic opinion units,
+- assignment of each opinion unit to a predefined ontology aspect,
+- sentiment polarity classification,
+- sentiment score estimation.
+
+The prompt serves as the entry point of the analytical pipeline by transforming unstructured, multi-topic textual feedback into structured and traceable opinion-level data.
+
+---
+
+"Perform Aspect-Based Sentiment Analysis (ABSA) on the following Hungarian text.\n",
     "OUTPUT REQUIREMENTS:\n",
     "- Output MUST be STRICT JSON. No explanations, no comments, no text before or after the JSON.\n",
     "- The JSON structure must be exactly:\n\n",
